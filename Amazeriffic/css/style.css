@@ -1,14 +1,25 @@
 header, main, footer {
-    min-width: 855px;
+    min-width: 1200px;
+    overflow: auto;
 }
 
 header .container, main .container, footer .container {
-    max-width: 855px;
+    max-width: 1200px;
     margin: auto;
 }
 
 header {
     background-color: white;
+}
+
+header h1, .main-text, .contact {
+    float: left;
+    width: 800px;
+}
+
+header nav, .main-img, .sitemap {
+    float: right;
+    width: 400px;
 }
 
 main {
