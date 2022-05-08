@@ -1,31 +1,90 @@
+body {
+    background-color: yellow;
+    font-family: 'Droid Sans';
+    font-size: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: red;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: red;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Ubuntu';
+    font-size: 110%;
+}
+
+h1 {
+    font-size: 270%;
+    font-style: italic;
+}
+
+main h2 {
+    font-size: 160%;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+footer h5 {
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
 header, main, footer {
-    min-width: 1200px;
+    min-width: 855px;
     overflow: auto;
+    padding: 20px;
 }
 
 header .container, main .container, footer .container {
-    max-width: 1200px;
+    max-width: 855px;
     margin: auto;
 }
 
 header {
     background-color: white;
+    margin-bottom: 4px;
 }
 
 header h1, .main-text, .contact {
     float: left;
-    width: 800px;
+    width: 570px;
 }
 
-header nav, .main-img, .sitemap {
+.main-text p, .main-text h3, .main-text ul {
+    padding: 5px 0;
+}
+
+.main-text h3 {
+    font-weight: bold;
+}
+
+.main-text li {
+    padding: 2px 0;
+    list-style: circle;
+    list-style-position: inside;
+}
+
+header nav, .sitemap {
     float: right;
-    width: 400px;
+    width: 285px;
+}
+
+header nav, footer li {
+    font-weight: bold;
+}
+
+main .bulb-img {
+    float: right;
+    width: 285px;
+    height: auto;
 }
 
 main {
     background-color: white;
-}
-
-body {
-    background-color: yellow;
 }
