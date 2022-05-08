@@ -51,24 +51,24 @@ header {
     margin-bottom: 4px;
 }
 
-header h1, .main-text, .contact {
+header h1, .contact {
     float: left;
     width: 570px;
 }
 
-.main-text p, .main-text h3, .main-text ul {
-    padding: 5px 0;
+.tabs a span {
+    display: block;
+    border: 5px 5px 0 0;
+    width: 100px;
+    margin-right: 10px;
+    text-align: center;
+    background: #ddd;
+    padding: 5px;
 }
 
-.main-text h3 {
-    font-weight: bold;
-}
-
-.main-text li {
-    padding: 2px 0;
-    list-style: circle;
-    list-style-position: inside;
-}
+.tabs a span.active {
+    background: #eee;
+}    
 
 header nav, .sitemap {
     float: right;
