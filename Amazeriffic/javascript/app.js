@@ -1,11 +1,11 @@
 var main = function () {
     "use strict";
-    for (var tabNumber = 1; tabNumber <= 3; tabNumber++) {
-        var tabSelector = ".tabs a:nth-child(" + tabNumber + ") span";
-        $(tabSelector).on("click", function () {
-            $(".tabs span").removeClass("active");
-            $(this).addClass("active");
+    $(".tabs a span").toArray().forEach(function (element) {
+        $(element).on("click", function() {
+            $(".tabs a span").removeClass("active");
+            $(element).addClass("active");
+            $("main .content").empty();
             return false;
         });
-    }
+    });
 };
