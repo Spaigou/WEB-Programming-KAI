@@ -29,7 +29,7 @@ var main = function (toDoObjects) {
         return toDo.description;
     });
     $(".tabs a span").toArray().forEach(function (element) {
-        $(element).on("click", function() {
+        $(element).on("click", function () {
             var $element = $(element), $content;
             $(".tabs a span").removeClass("active");
             $(element).addClass("active");
@@ -59,22 +59,25 @@ var main = function (toDoObjects) {
                     $("main .content").append($content);
                 })
             } else if ($element.parent().is(":nth-child(4)")) {
-                $content = $("main .content");
-                $content.append(
-                    '<input type="text" class="input">' +
-                    '<button class="button">+</button>'
-                );
-                var newGoal, input = "main .content .input";
-                $("main .content .button").on("click", function () {
-                    newGoal = $(input).val();
-                    if (newGoal != '') {
-                        toDos.push(newGoal);
-                        alert("Новая цель успешно добавлена!");
-                        $(input).val("");
+                var $input = $("<input>").addClass("input"),
+                    $inputLabel = $("<p>").text("Описание"),
+                    $tagInput = $("<input>").addClass("input"),
+                    $tagLabel = $("<p>").text("Теги"),
+                    $button = $("<button>").text("+").addClass("button");
+                $button.on("click", function () {
+                    var description = $input.val(),
+                        tags = $tagInput.val().split(",");
+                    if (description != '' && $tagInput.val() != '') {
+                        toDoObjects.push({ "description": description, "tags": tags });
+                        toDos.push(description);
+                        alert("Добавлено успешно!");
+                        $($input).val("");
+                        $($tagInput).val("");
                     } else {
-                        alert("Вы ничего не ввели...");
+                        alert("Поля не должны быть пустыми!");
                     }
                 });
+                $("main .content").append($inputLabel).append($input).append($tagLabel).append($tagInput).append($button);
             }
             return false;
         });
@@ -82,7 +85,7 @@ var main = function (toDoObjects) {
     $(".tabs a:first-child span").trigger("click");
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.getJSON("todos.json", function (toDoObjects) {
         main(toDoObjects);
     });
