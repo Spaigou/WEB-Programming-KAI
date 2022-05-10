@@ -75,10 +75,18 @@ main .content {
     padding: 15px 7px;
     background-color: #eee;
     font-size: 120%;
+    border-radius: 0 5px 5px 5px;
 }
 
 main .content li {
     background-color: white;
+    margin: 10px;
+    padding: 1px;
+}
+
+main .content h3 {
+    color: rgb(79, 78, 78);
+    background-color: #ddd;
     margin: 10px;
     padding: 1px;
 }
