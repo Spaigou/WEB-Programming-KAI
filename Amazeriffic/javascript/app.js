@@ -77,7 +77,8 @@ var main = function (toDoObjects) {
                         alert("Поля не должны быть пустыми!");
                     }
                 });
-                $("main .content").append($inputLabel).append($input).append($tagLabel).append($tagInput).append($button);
+                $("main .content").append($inputLabel).append($input).append($tagLabel).
+                    append($tagInput).append($button);
             }
             return false;
         });
