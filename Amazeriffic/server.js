@@ -5,7 +5,14 @@ var express = require("express"),
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
 // подключаемся к хранилищу данных Amazeriffic в Mongo
-mongoose.connect('mongodb://localhost/amazeriffic');
+mongoose.connect('mongodb://localhost/amazeriffic', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(res => {
+    console.log("DB Connected!")
+}).catch(err => {
+    console.log(Error, err.message);
+});;
 
 // Это модель Mongoose для задач
 var ToDoSchema = new mongoose.Schema({
