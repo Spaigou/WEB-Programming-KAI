@@ -92,7 +92,7 @@ var main = function (toDoObjects) {
 };
 
 $(document).ready(function () {
-    $.getJSON("todos.json", function (toDoObjects) {
+    $.getJSON("../todos.json", function (toDoObjects) {
         main(toDoObjects);
     });
 });
