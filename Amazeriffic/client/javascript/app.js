@@ -68,7 +68,12 @@ var main = function (toDoObjects) {
                     var description = $input.val(),
                         tags = $tagInput.val().split(",");
                     if (description != '' && $tagInput.val() != '') {
-                        toDoObjects.push({ "description": description, "tags": tags });
+                        var newToDo = { "description": description, "tags": tags };
+                        $.post("todos", newToDo, function (response) {
+                            console.log("Мы отправили данные и получили ответ сервера!");
+                            console.log(response);
+                        });
+                        toDoObjects.push(newToDo);
                         toDos.push(description);
                         alert("Добавлено успешно!");
                         $($input).val("");
