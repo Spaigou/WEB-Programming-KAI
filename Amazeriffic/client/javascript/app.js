@@ -25,85 +25,87 @@ var organizeByTag = function (toDoObjects) {
 
 var main = function (toDoObjects) {
     "use strict";
-    var toDos = toDoObjects.map(function (toDo) {
-        return toDo.description;
-    });
 
     var tabs = [],
         $content = $("<div>").addClass("content");
     tabs.push({
         "name": "Новые",
-        "content": function () {
-            var $list = $("<ul>");
-            for (var i = toDos.length - 1; i >= 0; i--) {
-                $list.append($("<li>").text(toDos[i]));
-            }
-            $content.append($list);
-            return $content;
+        "content": function (callback) {
+            $.getJSON("todos.json", function (toDoObjects) {
+                var $list = $("<ul>");
+                for (var i = toDoObjects.length - 1; i >= 0; i--) {
+                    $list.append($("<li>").text(toDoObjects[i].description));
+                }
+                $content.append($list);
+                callback($content);
+            })
         }
     });
     tabs.push({
         "name": "Старые",
-        "content": function () {
-            var $list = $("<ul>");
-            toDos.forEach(function (todo) {
-                $list.append($("<li>").text(todo));
-            });
-            $content.append($list)
-            return $content;
+        "content": function (callback) {
+            $.getJSON("todos.json", function (toDoObjects) {
+                var $list = $("<ul>");
+                toDoObjects.forEach(function (todo) {
+                    $list.append($("<li>").text(todo.description));
+                });
+                $content.append($list);
+                callback($content);
+            })
         }
     })
     tabs.push({
         "name": "Теги",
-        "content": function () {
-            var organizedByTag = organizeByTag(toDoObjects);
-            organizedByTag.forEach(function (tag) {
-                var $tagName = $("<h3>").text(tag.name);
-                $content.append($tagName);
-                var $list = $("<ul>");
-                tag.toDos.forEach(function (description) {
-                    var $li = $("<li>").text(description);
-                    $list.append($li);
+        "content": function (callback) {
+            $.getJSON("todos.json", function (toDoObjects) {
+                var organizedByTag = organizeByTag(toDoObjects);
+                organizedByTag.forEach(function (tag) {
+                    var $tagName = $("<h3>").text(tag.name);
+                    $content.append($tagName);
+                    var $list = $("<ul>");
+                    tag.toDos.forEach(function (toDo) {
+                        var $li = $("<li>").text(toDo);
+                        $list.append($li);
+                    });
+                    $content.append($list);
                 });
-                $content.append($list);
-            });
-            return $content;
+                callback($content);
+            })
         }
     })
     tabs.push({
         "name": "Добавить",
-        "content": function () {
-            var $input = $("<input>").addClass("input"),
-                $inputLabel = $("<p>").text("Описание"),
-                $tagInput = $("<input>").addClass("input"),
-                $tagLabel = $("<p>").text("Теги"),
-                $button = $("<button>").text("+").addClass("button");
-            $tagInput.keydown(function (e) {
-                if (e.keyCode == 13) {
-                    $button.click();
-                }
+        "content": function (callback) {
+            $.getJSON("todos.json", function (toDoObjects) {
+                var $input = $("<input>").addClass("input"),
+                    $inputLabel = $("<p>").text("Описание"),
+                    $tagInput = $("<input>").addClass("input"),
+                    $tagLabel = $("<p>").text("Теги"),
+                    $button = $("<button>").text("+").addClass("button");
+                $tagInput.keydown(function (e) {
+                    if (e.keyCode == 13) {
+                        $button.click();
+                    }
+                })
+                $button.on("click", function () {
+                    var description = $input.val(),
+                        tags = $tagInput.val().split(","),
+                        newToDo = { "description": description, "tags": tags };
+                    if (description != '' && $tagInput.val() != '') {
+                        $.post("todos", newToDo, function (result) {
+                            alert("Добавлено успешно!");
+                            $($input).val("");
+                            $($tagInput).val("");
+                            $(".tabs a:first-child span").trigger("click");
+                        })
+                    } else {
+                        alert("Поля не должны быть пустыми!");
+                    }
+                });
+                $content.append($inputLabel).append($input).append($tagLabel).
+                    append($tagInput).append($button);
+                callback($content);
             })
-            $button.on("click", function () {
-                var description = $input.val(),
-                    tags = $tagInput.val().split(",");
-                if (description != '' && $tagInput.val() != '') {
-                    var newToDo = { "description": description, "tags": tags };
-                    $.post("todos", newToDo, function (response) {
-                        console.log("Мы отправили данные и получили ответ сервера!");
-                        console.log(response);
-                    });
-                    toDoObjects.push(newToDo);
-                    toDos.push(description);
-                    alert("Добавлено успешно!");
-                    $($input).val("");
-                    $($tagInput).val("");
-                } else {
-                    alert("Поля не должны быть пустыми!");
-                }
-            });
-            $content.append($inputLabel).append($input).append($tagLabel).
-                append($tagInput).append($button);
-            return $content;
         }
     })
 
@@ -117,8 +119,9 @@ var main = function (toDoObjects) {
             $(".tabs a span").removeClass("active");
             $spanElement.addClass("active");
             $("main .content").empty();
-            $content = tab.content();
-            $("main .content").append($content);
+            tab.content(function () {
+                $("main .content").append($content);
+            });
             return false;
         });
     });
