@@ -4,7 +4,7 @@ var express = require("express"),
     app = express();
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
-// подключаемся к хранилищу данных Amazeriffic в Mongo
+
 mongoose.connect('mongodb://localhost/amazeriffic', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -14,13 +14,20 @@ mongoose.connect('mongodb://localhost/amazeriffic', {
     console.log(Error, err.message);
 });;
 
-// Это модель Mongoose для задач
+
 var ToDoSchema = new mongoose.Schema({
     description: String,
     tags: [String]
 });
 var ToDo = mongoose.model("ToDo", ToDoSchema);
-// начинаем слушать запросы
+
+var UserSchema = new mongoose.Schema({
+    username: String,
+    id: String
+})
+var User = mongoose.model("User", UserSchema);
+module.exports = User;
+
 http.createServer(app).listen(3000);
 
 app.get("/todos.json", function (req, res) {
@@ -44,11 +51,8 @@ app.post("/todos", function (req, res) {
             console.log(err);
             res.send("ERROR");
         } else {
-            // клиент ожидает, что будут возвращены все задачи,
-            // поэтому для сохранения совместимости сделаем дополнительый запрос
             ToDo.find({}, function (err, result) {
                 if (err != null) {
-                    // элемент не был сохранен
                     res.send("ERROR");
                 }
                 res.json(result);
