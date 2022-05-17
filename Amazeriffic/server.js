@@ -1,8 +1,7 @@
 var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
-    ToDo = require("./models/todo.js"),
-    // usersController = require("./controllers/users_controller.js"),
+    usersController = require("./controllers/users_controller.js"),
     toDosController = require("./controllers/todos_controller.js"),
     app = express();
 
@@ -22,11 +21,10 @@ mongoose.connect('mongodb://localhost/amazeriffic', {
 
 http.createServer(app).listen(3000);
 
-// app.get("/users.json", usersController.index);
-// app.post("/users", usersController.create);
-// app.get("/users/:username", usersController.show);
-// app.put("/users/:username", usersController.update);
-// app.delete("/users/:username", usersController.destroy);
+app.get("/user/:username/todos.json", toDosController.index);
+app.post("/user/:username/todos", toDosController.create);
+// app.put("/user/:username/todos/:id", toDosController.update);
+// app.delete("/user/:username/todos/:id", toDosController.destroy);
 
 app.get("/todos.json", toDosController.index);
 app.post("/todos", toDosController.create);
