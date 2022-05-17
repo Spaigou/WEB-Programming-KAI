@@ -37,7 +37,9 @@ var main = function (toDoObjects) {
                     $list.append($("<li>").text(toDoObjects[i].description));
                 }
                 $content.append($list);
-                callback($content);
+                callback(null, $content);
+            }).fail(function (jqXHR, textStatus, error) {
+                callback(error, null);
             })
         }
     });
@@ -50,7 +52,9 @@ var main = function (toDoObjects) {
                     $list.append($("<li>").text(todo.description));
                 });
                 $content.append($list);
-                callback($content);
+                callback(null, $content);
+            }).fail(function (jqXHR, textStatus, error) {
+                callback(error, null);
             })
         }
     })
@@ -69,7 +73,9 @@ var main = function (toDoObjects) {
                     });
                     $content.append($list);
                 });
-                callback($content);
+                callback(null, $content);
+            }).fail(function (jqXHR, textStatus, error) {
+                callback(error, null);
             })
         }
     })
@@ -104,7 +110,9 @@ var main = function (toDoObjects) {
                 });
                 $content.append($inputLabel).append($input).append($tagLabel).
                     append($tagInput).append($button);
-                callback($content);
+                callback(null, $content);
+            }).fail(function (jqXHR, textStatus, error) {
+                callback(error, null);
             })
         }
     })
@@ -115,12 +123,16 @@ var main = function (toDoObjects) {
         $aElement.append($spanElement);
         $("main .tabs").append($aElement).append($content);
         $spanElement.on("click", function () {
-            var $content;
             $(".tabs a span").removeClass("active");
             $spanElement.addClass("active");
             $("main .content").empty();
-            tab.content(function () {
-                $("main .content").append($content);
+            tab.content(function (err, $content) {
+                console.log(err);
+                if (err !== null) {
+                    alert("Возникла ошибка при обработке запроса: ", err);
+                } else {
+                    $("main .content").append($content);
+                }
             });
             return false;
         });
