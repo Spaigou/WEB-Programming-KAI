@@ -23,7 +23,7 @@ var organizeByTag = function (toDoObjects) {
     return tagObjects;
 }
 
-var main = function (toDoObjects) {
+var main = function () {
     "use strict";
 
     var tabs = [],
@@ -143,7 +143,7 @@ var main = function (toDoObjects) {
 };
 
 var liaWithDeleteOnClick = function (todo) {
-    var $todoListItem = $("<li>").text(todo.description),
+    var $todoListItem = $("<li>").text(todo.description + "\t"),
         $todoRemoveLink = $("<a>").attr("href", "todos/" + todo._id);
 
     $todoRemoveLink.text("Удалить");
@@ -195,8 +195,4 @@ var liaWithEditOnClick = function (todo) {
 };
 
 
-$(document).ready(function () {
-    $.getJSON("todos.json", function (toDoObjects) {
-        main(toDoObjects);
-    });
-});
+$(document).ready(main);

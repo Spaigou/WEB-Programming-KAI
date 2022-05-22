@@ -31,3 +31,5 @@ app.post("/todos", toDosController.create);
 app.delete("/todos/:id", toDosController.destroy);
 app.put("/todos/:id", toDosController.update);
 
+app.get("/users.json", usersController.index);
+app.get("/users/:username", usersController.search);

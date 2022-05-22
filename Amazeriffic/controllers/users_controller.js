@@ -1,29 +1,26 @@
 var User = require("../models/user.js"),
-    mongoose = require("mongoose");
-
-var UsersController = {};
-
-//проверка, не существует ли уже пользователь
-User.find({}, function (err, result) {
-    if (err !== null) {
-        console.log("Что-то идет не так");
-        console.log(err);
-    } else if (result.length === 0) {
-        console.log("Создание тестового пользователя...");
-        var exampleUser = new User({ "username": "usertest" });
-        exampleUser.save(function (err, result) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("Тестовый пользователь сохранен");
-            }
-        });
-    }
-});
+    UsersController = {};
 
 UsersController.index = function (req, res) {
-    console.log("вызвано действие: индекс");
-    res.send(200);
+    User.find(function (err, users) {
+        if (err !== null) {
+            res.json(500, err);
+        } else {
+            console.log(users);
+            res.status(200).json(users);
+        }
+    });
+};
+
+UsersController.search = function (req, res) {
+    var username = req.params.username;
+    User.findOne({ "username": username }, function (err, user) {
+        if (err !== null) {
+            res.json(500, err);
+        } else {
+            res.status(200).json(user);
+        }
+    });
 };
 
 //Отобразить пользователя

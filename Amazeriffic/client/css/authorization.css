@@ -1,0 +1,43 @@
+main .authorization {
+    width: 350px;
+    box-shadow: 0 0 10px black;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    margin: 50px auto;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+main .authorization h2 {
+    text-align: center;
+}
+
+main .authorization input {
+    width: 60%;
+    margin: 5px auto;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+main .authorization button {
+    width: 40%;
+    margin: 5px auto;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #44EB99;
+    cursor: pointer;
+    box-shadow: 0 2px rgb(65, 64, 64);
+}
+
+main .authorization button:hover {
+    background-color: #46e096;
+}
+
+main .authorization button:active {
+    box-shadow: 0 1px rgb(41, 40, 40);
+    background-color: #46e096;
+    transform: translateY(1px);
+}
