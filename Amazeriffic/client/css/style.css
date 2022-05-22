@@ -84,6 +84,10 @@ main .content li {
     padding: 1px;
 }
 
+main .content li a {
+    float: right;
+}
+
 main .content p {
     margin-left: 10px;
     font-weight: bold;

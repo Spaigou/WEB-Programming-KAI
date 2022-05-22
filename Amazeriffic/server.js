@@ -23,10 +23,11 @@ http.createServer(app).listen(3000);
 
 app.get("/user/:username/todos.json", toDosController.index);
 app.post("/user/:username/todos", toDosController.create);
-// app.put("/user/:username/todos/:id", toDosController.update);
-// app.delete("/user/:username/todos/:id", toDosController.destroy);
+app.delete("/user/:username/todos/:id", toDosController.destroy);
+app.put("/user/:username/todos/:id", toDosController.update);
 
 app.get("/todos.json", toDosController.index);
 app.post("/todos", toDosController.create);
-// app.put("/user/:username/todos/:id", toDosController.update);
-// app.delete("/user/:username/todos/:id", toDosController.destroy); 
+app.delete("/todos/:id", toDosController.destroy);
+app.put("/todos/:id", toDosController.update);
+
