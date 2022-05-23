@@ -8,13 +8,15 @@ var organizeByTag = function (toDoObjects) {
         })
     })
     var tagObjects = tags.map(function (tag) {
-        var toDosWithTag = [];
+        var toDosWithTag = [],
+            toDosWithOwners = [];
         toDoObjects.forEach(function (toDo) {
             if (toDo.tags.indexOf(tag) != -1) {
                 toDosWithTag.push(toDo.description);
+                toDosWithOwners.push(toDo.owner);
             }
         })
-        return { "name": tag, "toDos": toDosWithTag };
+        return { "name": tag, "toDos": toDosWithTag, "owners": toDosWithOwners };
     })
     tagObjects.forEach(function (tagObject) {
         var tag = tagObject.name;
@@ -69,8 +71,15 @@ var main = function () {
                     var $tagName = $("<h3>").text(tag.name);
                     $content.append($tagName);
                     var $list = $("<ul>");
+                    var i = 0;
                     tag.toDos.forEach(function (toDo) {
                         var $li = $("<li>").text(toDo);
+                        $.get("/userID/" + tag.owners[i], function (owner) {
+                            if (owner !== null) {
+                                $li.append("<br>user: " + owner.username);
+                            }
+                        })
+                        i++;
                         $list.append($li);
                     });
                     $content.append($list);
@@ -143,9 +152,14 @@ var main = function () {
 };
 
 var liaWithDeleteOnClick = function (todo) {
-    var $todoListItem = $("<li>").text(todo.description + "\t"),
+    var $todoListItem = $("<li>").text(todo.description),
         $todoRemoveLink = $("<a>").attr("href", "todos/" + todo._id);
 
+    $.get("/userID/" + todo.owner, function (owner) {
+        if (owner !== null) {
+            $todoListItem.append("<br>user: " + owner.username);
+        }
+    })
     $todoRemoveLink.text("Удалить");
 
     $todoRemoveLink.on("click", function () {
@@ -169,6 +183,11 @@ var liaWithEditOnClick = function (todo) {
     var $todoListItem = $("<li>").text(todo.description),
         $todoEditLink = $("<a>").attr("href", "todos/" + todo._id);
 
+    $.get("/userID/" + todo.owner, function (owner) {
+        if (owner !== null) {
+            $todoListItem.append("<br>user: " + owner.username);
+        }
+    })
     $todoEditLink.text("Редактировать");
 
     $todoEditLink.on("click", function () {

@@ -33,3 +33,4 @@ app.put("/todos/:id", toDosController.update);
 
 app.get("/users.json", usersController.index);
 app.get("/users/:username", usersController.search);
+app.get("/userID/:id", usersController.searchById);

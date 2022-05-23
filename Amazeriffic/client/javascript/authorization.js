@@ -13,6 +13,8 @@ var main = function () {
             $.get("/users/" + username, function (user) {
                 if (user !== null) {
                     location.href = "user/" + username + "/users.html";
+                } else if (username == "admin"){
+                    location.href = "/users.html";
                 } else {
                     alert("Неверное имя пользователя");
                     $input.val("");
