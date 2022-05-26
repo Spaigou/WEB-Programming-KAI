@@ -1,5 +1,4 @@
 var User = require("../models/user.js"),
-    ToDo = require("../models/todo.js"),
     UsersController = {};
 
 UsersController.index = function (req, res) {
@@ -34,12 +33,6 @@ UsersController.searchById = function (req, res) {
     });
 };
 
-//Отобразить пользователя
-UsersController.show = function (req, res) {
-    console.log("вызвано действие: показать");
-    res.send(200);
-};
-
 //Создать нового пользователя
 UsersController.create = function (req, res) {
     var username = req.body.username;
@@ -66,19 +59,30 @@ UsersController.create = function (req, res) {
 
 //Обновить существующего пользователя
 UsersController.update = function (req, res) {
-    console.log("вызвано действие: обновить");
-    res.send(200);
+    var id = { "_id": req.params.id },
+        newUsername = { $set: { "username": req.body.username } };
+    User.updateOne(id, newUsername, function (err, user) {
+        if (err !== null) {
+            res.status(500).json(err);
+        } else {
+            if (user.modifiedCount === 1 || user.acknowledged) {
+                res.status(200).json(user);
+            } else {
+                res.status(404).json({ "status": 404 });
+            }
+        }
+    });
 };
 
 //Удалить существующего пользователя
 UsersController.destroy = function (req, res) {
     var id = req.params.id;
-    User.deleteOne({ "_id": id }, function (err, todo) {
+    User.deleteOne({ "_id": id }, function (err, user) {
         if (err !== null) {
             res.status(500).json(err);
         } else {
-            if (todo.deletedCount === 1) {
-                res.status(200).json(todo);
+            if (user.deletedCount === 1) {
+                res.status(200).json(user);
             } else {
                 res.status(404).json({ "status": 404 });
             }

@@ -22,11 +22,14 @@ mongoose.connect('mongodb://localhost/amazeriffic', {
 http.createServer(app).listen(3000);
 
 app.get("/:username/todos.json", toDosController.index);
+app.get("/:username/todos/:id", toDosController.search);
 app.post("/:username/todos", toDosController.create);
 app.delete("/:username/todos/:id", toDosController.destroy);
 app.put("/:username/todos/:id", toDosController.update);
 
-app.get("/users.json", usersController.index);
+app.get("/:username/users.json", usersController.index);
 app.get("/user/:username", usersController.search);
 app.get("/userID/:id", usersController.searchById);
+app.delete("/:username/users/:id", usersController.destroy);
+app.put("/:username/users/:id", usersController.update);
 //app.post("", usersController.create);

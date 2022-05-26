@@ -29,6 +29,17 @@ ToDosController.index = function (req, res) {
     }
 };
 
+ToDosController.search = function (req, res) {
+    var id = req.params.id;
+    ToDo.find({ "owner": id }, function (err, result) {
+        if (err !== null) {
+            res.status(500).json(err);
+        } else {
+            res.status(200).json(result);
+        }
+    })
+}
+
 ToDosController.create = function (req, res) {
     var username = req.params.username || null,
         newToDo = new ToDo({
