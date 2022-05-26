@@ -20,12 +20,12 @@ ToDosController.index = function (req, res) {
                 res.json(500, err);
             } else if (result.length === 0) {
                 res.status(404).json({ "result_length": 0 });
+            } else if (result[0].role == "Админ") {
+                respondWithToDos({});
             } else {
                 respondWithToDos({ "owner": result[0]._id });
             }
         });
-    } else {
-        respondWithToDos({});
     }
 };
 

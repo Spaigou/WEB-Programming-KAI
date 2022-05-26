@@ -10,11 +10,13 @@ var main = function () {
     $button.on('click', function () {
         var username = $input.val();
         if (username !== null && username.trim() !== "") {
-            $.get("/users/" + username, function (user) {
+            $.get("user/" + username, function (user) {
                 if (user !== null) {
-                    location.href = "user/" + username + "/users.html";
-                } else if (username == "admin"){
-                    location.href = "/users.html";
+                    if (user.role == 'Админ') {
+                        location.href = username + "/admin.html";
+                    } else if (user.role == 'Пользователь') {
+                        location.href = username + "/users.html";
+                    }
                 } else {
                     alert("Неверное имя пользователя");
                     $input.val("");
@@ -30,7 +32,7 @@ var main = function () {
             $button.click();
         }
     })
-    $input.val("chingiz");
+    $input.val("admin");
 }
 
 $(document).ready(main);

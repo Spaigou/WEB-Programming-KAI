@@ -6,7 +6,7 @@ var express = require("express"),
     app = express();
 
 app.use('/', express.static(__dirname + "/client"));
-app.use('/user/:username', express.static(__dirname + "/client"));
+app.use('/:username', express.static(__dirname + "/client"));
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -21,16 +21,12 @@ mongoose.connect('mongodb://localhost/amazeriffic', {
 
 http.createServer(app).listen(3000);
 
-app.get("/user/:username/todos.json", toDosController.index);
-app.post("/user/:username/todos", toDosController.create);
-app.delete("/user/:username/todos/:id", toDosController.destroy);
-app.put("/user/:username/todos/:id", toDosController.update);
-
-app.get("/todos.json", toDosController.index);
-app.post("/todos", toDosController.create);
-app.delete("/todos/:id", toDosController.destroy);
-app.put("/todos/:id", toDosController.update);
+app.get("/:username/todos.json", toDosController.index);
+app.post("/:username/todos", toDosController.create);
+app.delete("/:username/todos/:id", toDosController.destroy);
+app.put("/:username/todos/:id", toDosController.update);
 
 app.get("/users.json", usersController.index);
-app.get("/users/:username", usersController.search);
+app.get("/user/:username", usersController.search);
 app.get("/userID/:id", usersController.searchById);
+//app.post("", usersController.create);

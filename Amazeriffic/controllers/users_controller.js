@@ -7,7 +7,6 @@ UsersController.index = function (req, res) {
         if (err !== null) {
             res.status(500).json(err);
         } else {
-            console.log(users);
             res.status(200).json(users);
         }
     });
@@ -43,8 +42,26 @@ UsersController.show = function (req, res) {
 
 //Создать нового пользователя
 UsersController.create = function (req, res) {
-    console.log("вызвано действие: создать");
-    res.send(200);
+    var username = req.body.username;
+    User.find({ "username": username }, function (err, result) {
+        if (err) {
+            res.status(500).send(err);
+        } else if (result.length !== 0) {
+            res.status(500).send("Пользователь уже существует!");
+        } else {
+            var newUser = new User({
+                "username": username,
+                "role": "Пользователь"
+            });
+            newUser.save(function (err, result) {
+                if (err !== null) {
+                    res.stats(500).json(err);
+                } else {
+                    res.status(200).json(result);
+                }
+            });
+        }
+    });
 };
 
 //Обновить существующего пользователя

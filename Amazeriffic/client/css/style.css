@@ -1,7 +1,7 @@
 body {
     background-color: yellow;
-    font-family: 'Droid Sans';
-    font-size: 105%;
+    font-family: 'Roboto';
+    font-size: 100%;
 }
 
 a {
@@ -15,7 +15,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Ubuntu';
+    font-family: 'Montserrat';
     font-size: 110%;
 }
 
@@ -80,14 +80,15 @@ main .content {
 
 main .content li {
     background-color: white;
+    overflow: inherit;
     margin: 10px;
-    padding: 3px;
+    padding: 5px;
     border-radius: 3px;
 }
 
 main .content li a {
     float: right;
-    padding: 10px 0;
+    transform: translateY(100%);
 }
 
 main .content p {

@@ -76,7 +76,7 @@ var main = function () {
                         var $li = $("<li>").text(toDo);
                         $.get("/userID/" + tag.owners[i], function (owner) {
                             if (owner !== null) {
-                                $li.append("<br>user: " + owner.username);
+                                $li.append("<br>Пользователь: " + owner.username);
                             }
                         })
                         i++;
@@ -157,7 +157,7 @@ var liaWithDeleteOnClick = function (todo) {
 
     $.get("/userID/" + todo.owner, function (owner) {
         if (owner !== null) {
-            $todoListItem.append("<br>user: " + owner.username);
+            $todoListItem.append("<br>Пользователь: " + owner.username);
         }
     })
     $todoRemoveLink.text("Удалить");
@@ -185,7 +185,7 @@ var liaWithEditOnClick = function (todo) {
 
     $.get("/userID/" + todo.owner, function (owner) {
         if (owner !== null) {
-            $todoListItem.append("<br>user: " + owner.username);
+            $todoListItem.append("<br>Пользователь: " + owner.username);
         }
     })
     $todoEditLink.text("Редактировать");
