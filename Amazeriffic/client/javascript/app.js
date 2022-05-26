@@ -84,7 +84,8 @@ var main = function () {
         "name": "Добавить",
         "content": function (callback) {
             $.getJSON("todos.json", function (toDoObjects) {
-                var $input = $("<input>").addClass("input"),
+                var $addBox = $("<div>").addClass("add-box"),
+                    $input = $("<input>").addClass("input"),
                     $inputLabel = $("<p>").text("Описание"),
                     $tagInput = $("<input>").addClass("input"),
                     $tagLabel = $("<p>").text("Теги"),
@@ -112,8 +113,9 @@ var main = function () {
                         alert("Поля не должны быть пустыми!");
                     }
                 });
-                $content.append($inputLabel).append($input).append($tagLabel).
+                $addBox.append($inputLabel).append($input).append($tagLabel).
                     append($tagInput).append($button);
+                $content.append($addBox);
                 callback(null, $content);
             }).fail(function (jqXHR, textStatus, error) {
                 callback(error, null);
