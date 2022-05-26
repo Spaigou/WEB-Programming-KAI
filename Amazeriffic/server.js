@@ -30,6 +30,6 @@ app.put("/:username/todos/:id", toDosController.update);
 app.get("/:username/users.json", usersController.index);
 app.get("/user/:username", usersController.search);
 app.get("/userID/:id", usersController.searchById);
+app.post("/:username/users", usersController.create);
 app.delete("/:username/users/:id", usersController.destroy);
 app.put("/:username/users/:id", usersController.update);
-//app.post("", usersController.create);

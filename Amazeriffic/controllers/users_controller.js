@@ -36,6 +36,7 @@ UsersController.searchById = function (req, res) {
 //Создать нового пользователя
 UsersController.create = function (req, res) {
     var username = req.body.username;
+    console.log(username);
     User.find({ "username": username }, function (err, result) {
         if (err) {
             res.status(500).send(err);

@@ -146,10 +146,33 @@ var main = function () {
                     $list.append($userListItem);
                 });
                 $content.append($list);
-                callback(null, $content);
             }).fail(function (jqXHR, textStatus, error) {
                 callback(error, null);
             })
+            var $inputBox = $("<div>").addClass("input-box"),
+                $inputLabel = $("<p>").text("Добавить пользователя"),
+                $input = $("<input>").addClass("input"),
+                $button = $("<button>").text("+").addClass("button");
+            $input.keydown(function (e) {
+                if (e.keyCode == 13) {
+                    $button.click();
+                }
+            })
+            $button.on("click", function () {
+                var username = $input.val();
+                if (username !== '') {
+                    $.post("users", { "username": username }, function (result) {
+                        alert("Добавлено успешно!");
+                        $(".tabs a:nth-child(5) span").trigger("click");
+                    })
+                } else {
+                    alert("Поля не должны быть пустыми!");
+                }
+            })
+
+            $inputBox.append($inputLabel).append($input).append($button);
+            $content.append($inputBox);
+            callback(null, $content);
         }
     })
 
@@ -233,7 +256,7 @@ var liaWithEditAndDeleteOnClick = function (user) {
         return false;
     })
 
-    $userListItem.append($userEditLink).append($userRemoveLink);
+    $userListItem.append($userRemoveLink).append($userEditLink);
     return $userListItem;
 }
 

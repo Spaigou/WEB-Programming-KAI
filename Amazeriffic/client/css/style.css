@@ -60,7 +60,6 @@ header h1, .contact {
     display: inline-block;
     border-radius: 5px 5px 0 0;
     width: 120px;
-    overflow: hidden;
     margin-right: 5px;
     text-align: center;
     background: #ddd;
@@ -88,7 +87,7 @@ main .content li {
 }
 
 main .content li a {
-    padding: 0.5em;
+    margin-right: 8px;
     float: right;
 }
 
@@ -101,6 +100,7 @@ main .content h3 {
     background-color: #ddd;
     margin: 10px;
     padding: 1px;
+    font-weight: bold;
 }
 
 main .content .add-box {
@@ -120,6 +120,10 @@ main .content .input {
 main .content .button {
     font-weight: bold;
     font-size: 110%;
+}
+
+main .content .input-box {
+    margin-left: 10px;
 }
 
 header nav, .sitemap {

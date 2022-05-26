@@ -32,7 +32,6 @@ var main = function () {
             $button.click();
         }
     })
-    $input.val("admin");
 }
 
 $(document).ready(main);
