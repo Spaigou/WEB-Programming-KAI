@@ -217,7 +217,11 @@ var liaWithEditAndDeleteOnClick = function (user) {
                 "data": { "username": newUsername }
             }).done(function (response) {
                 alert("Updated successfully!");
-                location.href = "/" + newUsername + "/admin.html";
+                if (user.role == 'Админ') {
+                    location.href = "/" + newUsername + "/admin.html";
+                } else {
+                    location.reload();
+                }
             }).fail(function (err) {
                 alert("Error:", err);
             })
@@ -233,18 +237,6 @@ var liaWithEditAndDeleteOnClick = function (user) {
                     "type": "DELETE"
                 }).done(function (response) {
                     alert("Deleted successfully!");
-                    $.get("todos/" + user._id, function (toDos) {
-                        toDos.forEach(function (todo) {
-                            $.ajax({
-                                "url": "todos/" + todo._id,
-                                "type": "DELETE"
-                            }).done(function (response) {
-                                location.reload();
-                            }).fail(function (err) {
-                                console.log("error on delete 'todo'!");
-                            });
-                        })
-                    })
                     location.reload();
                 }).fail(function (err) {
                     console.log("Error on delete 'user'!");

@@ -1,4 +1,5 @@
 var User = require("../models/user.js"),
+    ToDo = require("../models/todo.js"),
     UsersController = {};
 
 UsersController.index = function (req, res) {
@@ -36,7 +37,6 @@ UsersController.searchById = function (req, res) {
 //Создать нового пользователя
 UsersController.create = function (req, res) {
     var username = req.body.username;
-    console.log(username);
     User.find({ "username": username }, function (err, result) {
         if (err) {
             res.status(500).send(err);
@@ -82,11 +82,13 @@ UsersController.destroy = function (req, res) {
         if (err !== null) {
             res.status(500).json(err);
         } else {
-            if (user.deletedCount === 1) {
-                res.status(200).json(user);
-            } else {
-                res.status(404).json({ "status": 404 });
-            }
+            ToDo.deleteMany({ "owner": id }, function (err, todo) {
+                if (err !== null) {
+                    res.status(500).json(err);
+                } else {
+                    res.json(user);
+                }
+            });
         }
     });
 };
